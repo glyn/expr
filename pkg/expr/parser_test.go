@@ -25,31 +25,48 @@ func TestNewNode(t *testing.T) {
 			lexemes:  []lexeme{},
 			expected: nil,
 		},
-		{
-			name:    "integer",
-			lexemes: []lexeme{"1"},
-			expected: &node{
-				lexeme:   "1",
-				children: []*node{},
-			},
-		},
 		// {
-		// 	name:    "sum",
-		// 	lexemes: []lexeme{"1", "+", "2"},
+		// 	name:    "integer",
+		// 	lexemes: []lexeme{"1"},
 		// 	expected: &node{
-		// 		lexeme: "+",
-		// 		children: []*node{
-		// 			{
-		// 				lexeme:   "1",
-		// 				children: []*node{},
-		// 			},
-		// 			{
-		// 				lexeme:   "2",
-		// 				children: []*node{},
-		// 			},
-		// 		},
+		// 		lexeme:   "1",
+		// 		children: []*node{},
 		// 	},
 		// },
+		{
+			name:    "add",
+			lexemes: []lexeme{"1", "+", "2"},
+			expected: &node{
+				lexeme: "+",
+				children: []*node{
+					{
+						lexeme:   "1",
+						children: []*node{},
+					},
+					{
+						lexeme:   "2",
+						children: []*node{},
+					},
+				},
+			},
+		},
+		{
+			name:    "subtract",
+			lexemes: []lexeme{"1", "-", "2"},
+			expected: &node{
+				lexeme: "-",
+				children: []*node{
+					{
+						lexeme:   "1",
+						children: []*node{},
+					},
+					{
+						lexeme:   "2",
+						children: []*node{},
+					},
+				},
+			},
+		},
 		// {
 		// 	name:    "multiplication",
 		// 	lexemes: []lexeme{"1", "*", "2"},
