@@ -85,11 +85,10 @@ type pstateFn func(*parser) pstateFn
 // parser holds the state of the filter expression parser.
 // based on https://compilers.iecc.com/crenshaw/
 type parser struct {
-	input     []lexeme // the lexemes being scanned
-	pos       int      // current position in the input
-	stack     []*node  // parser stack
-	tree      *node    // parse tree, equivalent of D0
-	savedTree *node    // parse tree, equivalent of D1
+	input []lexeme // the lexemes being scanned
+	pos   int      // current position in the input
+	stack []*node  // parser stack
+	tree  *node    // parse tree, equivalent of D0
 }
 
 // lex creates a new scanner for the input string.
@@ -171,7 +170,7 @@ func (p *parser) add() {
 	p.tree = &node{
 		lexeme: add,
 		children: []*node{
-			p.savedTree,
+			p.pop(),
 			p.tree,
 		},
 	}
@@ -183,7 +182,7 @@ func (p *parser) subtract() {
 	p.tree = &node{
 		lexeme: subtract,
 		children: []*node{
-			p.savedTree,
+			p.pop(),
 			p.tree,
 		},
 	}
@@ -192,7 +191,7 @@ func (p *parser) subtract() {
 func (p *parser) expression() {
 	p.term()
 	for p.peek() == "+" || p.peek() == "-" {
-		p.savedTree = p.tree
+		p.push(p.tree)
 		switch p.peek() {
 		case add:
 			p.add()
