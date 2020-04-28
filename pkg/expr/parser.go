@@ -46,13 +46,11 @@ const (
                            / \
                           1   2
 
-   The filter expression `(1+2)*3` is represented as the parse tree:
+   The expression `(1+2)*3` is represented as the parse tree:
 
                            *
                         /     \
-					  ( )      3
-					   |
-					   +
+					   +       3
 				     /   \
 				    1     2
 */
@@ -79,12 +77,7 @@ func (n *node) indentedString(indent int) string {
 	return fmt.Sprintf("%s%s%s", i, s, c)
 }
 
-// pstateFn represents the state of the parser as a function that returns the next state.
-// A nil pstateFn indicates lexing is complete.
-type pstateFn func(*parser) pstateFn
-
-// parser holds the state of the filter expression parser.
-// based on https://compilers.iecc.com/crenshaw/
+// parser holds the state of the expression parser.
 type parser struct {
 	input []lexeme // the lexemes being scanned
 	pos   int      // current position in the input
