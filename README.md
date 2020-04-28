@@ -1,3 +1,5 @@
 <expression> ::= <term> [<addop> <term>]*
+<term> ::= <factor> [ <mulop> <factor> ]*
 <addop> ::= "+" | "-"
-<term> ::= <digit>
+<mulop> ::= "*" | "/"
+<factor> ::= <digit>

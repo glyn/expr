@@ -68,7 +68,7 @@ func TestNewNode(t *testing.T) {
 			},
 		},
 		{
-			name:    "add and subtract",
+			name:    "1+2-3",
 			lexemes: []lexeme{"1", "+", "2", "-", "3"},
 			expected: &node{
 				lexeme: "-",
@@ -89,6 +89,32 @@ func TestNewNode(t *testing.T) {
 					{
 						lexeme:   "3",
 						children: []*node{},
+					},
+				},
+			},
+		},
+		{
+			name:    "2+3*4",
+			lexemes: []lexeme{"2", "+", "3", "*", "4"},
+			expected: &node{
+				lexeme: "+",
+				children: []*node{
+					{
+						lexeme:   "2",
+						children: []*node{},
+					},
+					{
+						lexeme: "*",
+						children: []*node{
+							{
+								lexeme:   "3",
+								children: []*node{},
+							},
+							{
+								lexeme:   "4",
+								children: []*node{},
+							},
+						},
 					},
 				},
 			},

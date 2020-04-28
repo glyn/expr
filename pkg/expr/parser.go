@@ -17,6 +17,7 @@ const (
 	add          lexeme = "+"
 	subtract     lexeme = "-"
 	multiply     lexeme = "*"
+	divide       lexeme = "/"
 	openBracket  lexeme = "("
 	closeBracket lexeme = ")"
 	eof          lexeme = "."
@@ -160,8 +161,47 @@ func (p *parser) match(m lexeme) {
 	panic(fmt.Sprintf("%s expected but found %s", m, p.peek()))
 }
 
-func (p *parser) term() {
+func (p *parser) factor() {
 	p.tree = p.getNum()
+}
+
+func (p *parser) multiply() {
+	p.match(multiply)
+	p.factor()
+	p.tree = &node{
+		lexeme: multiply,
+		children: []*node{
+			p.pop(),
+			p.tree,
+		},
+	}
+}
+
+func (p *parser) divide() {
+	p.match(divide)
+	p.factor()
+	p.tree = &node{
+		lexeme: divide,
+		children: []*node{
+			p.pop(),
+			p.tree,
+		},
+	}
+}
+
+func (p *parser) term() {
+	p.factor()
+	for p.peek() == multiply || p.peek() == divide {
+		p.push(p.tree)
+		switch p.peek() {
+		case multiply:
+			p.multiply()
+		case divide:
+			p.divide()
+		default:
+			panic(fmt.Sprintf("* or / expected, found %s", p.peek()))
+		}
+	}
 }
 
 func (p *parser) add() {
@@ -190,7 +230,7 @@ func (p *parser) subtract() {
 
 func (p *parser) expression() {
 	p.term()
-	for p.peek() == "+" || p.peek() == "-" {
+	for p.peek() == add || p.peek() == subtract {
 		p.push(p.tree)
 		switch p.peek() {
 		case add:
