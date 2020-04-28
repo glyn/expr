@@ -1,3 +1,3 @@
-<expr> ::= <term> <addop> <term>
+<expression> ::= <term> [<addop> <term>]*
 <addop> ::= "+" | "-"
 <term> ::= <digit>

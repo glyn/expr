@@ -191,14 +191,16 @@ func (p *parser) subtract() {
 
 func (p *parser) expression() {
 	p.term()
-	p.savedTree = p.tree
-	switch p.peek() {
-	case add:
-		p.add()
-	case subtract:
-		p.subtract()
-	default:
-		panic(fmt.Sprintf("+ or - expected, found %s", p.peek()))
+	for p.peek() == "+" || p.peek() == "-" {
+		p.savedTree = p.tree
+		switch p.peek() {
+		case add:
+			p.add()
+		case subtract:
+			p.subtract()
+		default:
+			panic(fmt.Sprintf("+ or - expected, found %s", p.peek()))
+		}
 	}
 }
 
