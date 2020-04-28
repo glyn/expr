@@ -119,172 +119,40 @@ func TestNewNode(t *testing.T) {
 				},
 			},
 		},
-		// {
-		// 	name:    "multiplication",
-		// 	lexemes: []lexeme{"1", "*", "2"},
-		// 	expected: &node{
-		// 		lexeme: "*",
-		// 		children: []*node{
-		// 			{
-		// 				lexeme:   "1",
-		// 				children: []*node{},
-		// 			},
-		// 			{
-		// 				lexeme:   "2",
-		// 				children: []*node{},
-		// 			},
-		// 		},
-		// 	},
-		// },
-		// {
-		// 	name:    "1*2+3",
-		// 	lexemes: []lexeme{"1", "*", "2", "+", "3"},
-		// 	expected: &node{
-		// 		lexeme: "+",
-		// 		children: []*node{
-		// 			{
-		// 				lexeme: "*",
-		// 				children: []*node{
-		// 					{
-		// 						lexeme:   "1",
-		// 						children: []*node{},
-		// 					},
-		// 					{
-		// 						lexeme:   "2",
-		// 						children: []*node{},
-		// 					},
-		// 				},
-		// 			},
-		// 			{
-		// 				lexeme:   "3",
-		// 				children: []*node{},
-		// 			},
-		// 		},
-		// 	},
-		// },
-		// {
-		// 	name:    "1+2*3",
-		// 	lexemes: []lexeme{"1", "+", "2", "*", "3"},
-		// 	expected: &node{
-		// 		lexeme: "+",
-		// 		children: []*node{
-		// 			{
-		// 				lexeme:   "1",
-		// 				children: []*node{},
-		// 			},
-		// 			{
-		// 				lexeme: "*",
-		// 				children: []*node{
-		// 					{
-		// 						lexeme:   "2",
-		// 						children: []*node{},
-		// 					},
-		// 					{
-		// 						lexeme:   "3",
-		// 						children: []*node{},
-		// 					},
-		// 				},
-		// 			},
-		// 		},
-		// 	},
-		// },
-		// {
-		// 	name:    "1+2+3",
-		// 	lexemes: []lexeme{"1", "+", "2", "+", "3"},
-		// 	expected: &node{
-		// 		lexeme: "+",
-		// 		children: []*node{
-		// 			{
-		// 				lexeme: "+",
-		// 				children: []*node{
-		// 					{
-		// 						lexeme:   "1",
-		// 						children: []*node{},
-		// 					},
-		// 					{
-		// 						lexeme:   "2",
-		// 						children: []*node{},
-		// 					},
-		// 				},
-		// 			},
-		// 			{
-		// 				lexeme:   "3",
-		// 				children: []*node{},
-		// 			},
-		// 		},
-		// 	},
-		// },
-		// {
-		// 	name:    "1*2*3",
-		// 	lexemes: []lexeme{"1", "*", "2", "*", "3"},
-		// 	expected: &node{
-		// 		lexeme: "*",
-		// 		children: []*node{
-		// 			{
-		// 				lexeme:   "1",
-		// 				children: []*node{},
-		// 			},
-		// 			{
-		// 				lexeme: "*",
-		// 				children: []*node{
-		// 					{
-		// 						lexeme:   "2",
-		// 						children: []*node{},
-		// 					},
-		// 					{
-		// 						lexeme:   "3",
-		// 						children: []*node{},
-		// 					},
-		// 				},
-		// 			},
-		// 		},
-		// 	},
-		// },
-		// {
-		// 	name:    "simple bracket",
-		// 	lexemes: []lexeme{"(", "1", ")"},
-		// 	expected: &node{
-		// 		lexeme: "()",
-		// 		children: []*node{
-		// 			{
-		// 				lexeme:   "1",
-		// 				children: []*node{},
-		// 			},
-		// 		},
-		// 	},
-		// },
-		// {
-		// 	focus:   true,
-		// 	name:    "(1+2)*3",
-		// 	lexemes: []lexeme{"(", "1", "+", "2", ")", "*", "3"},
-		// 	expected: &node{
-		// 		lexeme: "*",
-		// 		children: []*node{
-		// 			{
-		// 				lexeme: "()",
-		// 				children: []*node{
-		// 					{
-		// 						lexeme: "+",
-		// 						children: []*node{
-		// 							{
-		// 								lexeme:   "1",
-		// 								children: []*node{},
-		// 							},
-		// 							{
-		// 								lexeme:   "2",
-		// 								children: []*node{},
-		// 							},
-		// 						},
-		// 					},
-		// 				},
-		// 			},
-		// 			{
-		// 				lexeme:   "3",
-		// 				children: []*node{},
-		// 			},
-		// 		},
-		// 	},
-		// },
+		{
+			name:    "simple bracket",
+			lexemes: []lexeme{"(", "1", ")"},
+			expected: &node{
+				lexeme:   "1",
+				children: []*node{},
+			},
+		},
+		{
+			name:    "(2+3)*4",
+			lexemes: []lexeme{"(", "2", "+", "3", ")", "*", "4"},
+			expected: &node{
+				lexeme: "*",
+				children: []*node{
+					{
+						lexeme: "+",
+						children: []*node{
+							{
+								lexeme:   "2",
+								children: []*node{},
+							},
+							{
+								lexeme:   "3",
+								children: []*node{},
+							},
+						},
+					},
+					{
+						lexeme:   "4",
+						children: []*node{},
+					},
+				},
+			},
+		},
 	}
 
 	focussed := false

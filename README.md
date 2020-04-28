@@ -2,4 +2,4 @@
 <term> ::= <factor> [ <mulop> <factor> ]*
 <addop> ::= "+" | "-"
 <mulop> ::= "*" | "/"
-<factor> ::= <digit>
+<factor> ::= <digit> | "(" <expression> ")"

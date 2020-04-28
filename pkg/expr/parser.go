@@ -162,7 +162,13 @@ func (p *parser) match(m lexeme) {
 }
 
 func (p *parser) factor() {
-	p.tree = p.getNum()
+	if p.peek() == openBracket {
+		p.match(openBracket)
+		p.expression()
+		p.match(closeBracket)
+	} else {
+		p.tree = p.getNum()
+	}
 }
 
 func (p *parser) multiply() {
